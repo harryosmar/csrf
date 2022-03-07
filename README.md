@@ -1,7 +1,7 @@
 # gorilla/csrf
 
-[![GoDoc](https://godoc.org/github.com/gorilla/csrf?status.svg)](https://godoc.org/github.com/gorilla/csrf)
-[![Sourcegraph](https://sourcegraph.com/github.com/gorilla/csrf/-/badge.svg)](https://sourcegraph.com/github.com/gorilla/csrf?badge)
+[![GoDoc](https://godoc.org/github.com/harryosmar/csrf?status.svg)](https://godoc.org/github.com/harryosmar/csrf)
+[![Sourcegraph](https://sourcegraph.com/github.com/harryosmar/csrf/-/badge.svg)](https://sourcegraph.com/github.com/harryosmar/csrf?badge)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 [![CircleCI](https://circleci.com/gh/gorilla/csrf.svg?style=svg)](https://circleci.com/gh/gorilla/csrf)
 
@@ -46,7 +46,7 @@ gorilla/csrf is also compatible with middleware 'helper' libraries like
 With a properly configured Go toolchain:
 
 ```sh
-go get github.com/gorilla/csrf
+go get github.com/harryosmar/csrf
 ```
 
 ## Examples
@@ -90,7 +90,7 @@ package main
 import (
     "net/http"
 
-    "github.com/gorilla/csrf"
+    "github.com/harryosmar/csrf"
     "github.com/gorilla/mux"
 )
 
@@ -154,7 +154,7 @@ as we don't handle any POST/PUT/DELETE requests with our top-level router.
 package main
 
 import (
-    "github.com/gorilla/csrf"
+    "github.com/harryosmar/csrf"
     "github.com/gorilla/mux"
 )
 
@@ -223,7 +223,7 @@ feature to allow the host of your JavaScript application to make requests to you
 package main
 
 import (
-    "github.com/gorilla/csrf"
+    "github.com/harryosmar/csrf"
     "github.com/gorilla/mux"
 )
 

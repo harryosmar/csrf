@@ -17,7 +17,7 @@ jobs:
         default: ""
     docker:
       - image: "circleci/golang:<< parameters.version >>"
-    working_directory: /go/src/github.com/gorilla/csrf
+    working_directory: /go/src/github.com/harryosmar/csrf
     environment:
       GO111MODULE: "on"
       GOPROXY: "<< parameters.goproxy >>"

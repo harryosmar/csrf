@@ -40,7 +40,7 @@ in order to protect malicious POST requests being made:
 		"html/template"
 		"net/http"
 
-		"github.com/gorilla/csrf"
+		"github.com/harryosmar/csrf"
 		"github.com/gorilla/mux"
 	)
 
@@ -109,7 +109,7 @@ providing a JSON API:
 	package main
 
 	import (
-		"github.com/gorilla/csrf"
+		"github.com/harryosmar/csrf"
 		"github.com/gorilla/mux"
 	)
 

@@ -24,7 +24,7 @@ type store interface {
 	Save(token []byte, w http.ResponseWriter) error
 }
 
-// cookieStore is a signed cookie session store for CSRF tokens.
+// CookieStore is a signed cookie session store for CSRF tokens.
 type cookieStore struct {
 	name     string
 	maxAge   int

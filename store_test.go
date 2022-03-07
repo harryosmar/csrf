@@ -15,11 +15,11 @@ import (
 )
 
 // Check store implementations
-var _ store = &cookieStore{}
+var _ Store = &CookieStore{}
 
 // brokenSaveStore is a CSRF store that cannot, well, save.
 type brokenSaveStore struct {
-	store
+	Store
 }
 
 func (bs *brokenSaveStore) Get(*http.Request) ([]byte, error) {
@@ -36,7 +36,7 @@ func TestStoreCannotSave(t *testing.T) {
 	s := http.NewServeMux()
 	bs := &brokenSaveStore{}
 	s.HandleFunc("/", testHandler)
-	p := Protect(testKey, setStore(bs))(s)
+	p := Protect(testKey, SetStore(bs))(s)
 
 	r, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
@@ -47,12 +47,12 @@ func TestStoreCannotSave(t *testing.T) {
 	p.ServeHTTP(rr, r)
 
 	if rr.Code != http.StatusForbidden {
-		t.Fatalf("broken store did not set an error status: got %v want %v",
+		t.Fatalf("broken Store did not set an error status: got %v want %v",
 			rr.Code, http.StatusForbidden)
 	}
 
 	if c := rr.Header().Get("Set-Cookie"); c != "" {
-		t.Fatalf("broken store incorrectly set a cookie: got %v want %v",
+		t.Fatalf("broken Store incorrectly set a cookie: got %v want %v",
 			c, "")
 	}
 
@@ -70,7 +70,7 @@ func TestCookieDecode(t *testing.T) {
 	// Test with a nil hash key
 	sc := securecookie.New(nil, nil)
 	sc.MaxAge(age)
-	st := &cookieStore{cookieName, age, true, true, "", "", sc, SameSiteDefaultMode}
+	st := &CookieStore{cookieName, age, true, true, "", "", sc, SameSiteDefaultMode}
 
 	// Set a fake cookie value so r.Cookie passes.
 	r.Header.Set("Cookie", fmt.Sprintf("%s=%s", cookieName, "notacookie"))
@@ -88,7 +88,7 @@ func TestCookieEncode(t *testing.T) {
 	// Test with a nil hash key
 	sc := securecookie.New(nil, nil)
 	sc.MaxAge(age)
-	st := &cookieStore{cookieName, age, true, true, "", "", sc, SameSiteDefaultMode}
+	st := &CookieStore{cookieName, age, true, true, "", "", sc, SameSiteDefaultMode}
 
 	rr := httptest.NewRecorder()
 

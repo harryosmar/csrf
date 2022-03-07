@@ -74,7 +74,7 @@ const (
 type csrf struct {
 	h    http.Handler
 	sc   *securecookie.SecureCookie
-	st   store
+	st   Store
 	opts options
 }
 
@@ -112,7 +112,7 @@ type options struct {
 //	import (
 //		"html/template"
 //
-//		"github.com/gorilla/csrf"
+//		"github.com/harryosmar/csrf"
 //		"github.com/gorilla/mux"
 //	)
 //
@@ -180,8 +180,8 @@ func Protect(authKey []byte, opts ...Option) func(http.Handler) http.Handler {
 		}
 
 		if cs.st == nil {
-			// Default to the cookieStore
-			cs.st = &cookieStore{
+			// Default to the CookieStore
+			cs.st = &CookieStore{
 				name:     cs.opts.CookieName,
 				maxAge:   cs.opts.MaxAge,
 				secure:   cs.opts.Secure,

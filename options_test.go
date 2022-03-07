@@ -81,7 +81,7 @@ func TestMaxAge(t *testing.T) {
 	t.Run("Ensure the default MaxAge is applied", func(t *testing.T) {
 		handler := Protect(testKey)(nil)
 		csrf := handler.(*csrf)
-		cs := csrf.st.(*cookieStore)
+		cs := csrf.st.(*CookieStore)
 
 		if cs.maxAge != defaultAge {
 			t.Fatalf("default maxAge not applied: got %d (want %d)", cs.maxAge, defaultAge)
@@ -91,7 +91,7 @@ func TestMaxAge(t *testing.T) {
 	t.Run("Support an explicit MaxAge of 0 (session-only)", func(t *testing.T) {
 		handler := Protect(testKey, MaxAge(0))(nil)
 		csrf := handler.(*csrf)
-		cs := csrf.st.(*cookieStore)
+		cs := csrf.st.(*CookieStore)
 
 		if cs.maxAge != 0 {
 			t.Fatalf("zero (0) maxAge not applied: got %d (want %d)", cs.maxAge, 0)
