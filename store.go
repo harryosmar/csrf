@@ -24,28 +24,28 @@ type Store interface {
 
 // CookieStore is a signed cookie session store for CSRF tokens.
 type CookieStore struct {
-	name     string
-	maxAge   int
-	secure   bool
-	httpOnly bool
-	path     string
-	domain   string
-	sc       *securecookie.SecureCookie
-	sameSite SameSiteMode
+	Name     string
+	MaxAge   int
+	Secure   bool
+	HttpOnly bool
+	Path     string
+	Domain   string
+	Sc       *securecookie.SecureCookie
+	SameSite SameSiteMode
 }
 
 // Get retrieves a CSRF token from the session cookie. It returns an empty token
 // if decoding fails (e.g. HMAC validation fails or the named cookie doesn't exist).
 func (cs *CookieStore) Get(r *http.Request) ([]byte, error) {
 	// Retrieve the cookie from the request
-	cookie, err := r.Cookie(cs.name)
+	cookie, err := r.Cookie(cs.Name)
 	if err != nil {
 		return nil, err
 	}
 
 	token := make([]byte, tokenLength)
 	// Decode the HMAC authenticated cookie.
-	err = cs.sc.Decode(cs.name, cookie.Value, &token)
+	err = cs.Sc.Decode(cs.Name, cookie.Value, &token)
 	if err != nil {
 		return nil, err
 	}
@@ -56,28 +56,28 @@ func (cs *CookieStore) Get(r *http.Request) ([]byte, error) {
 // Save stores the CSRF token in the session cookie.
 func (cs *CookieStore) Save(token []byte, w http.ResponseWriter) error {
 	// Generate an encoded cookie value with the CSRF token.
-	encoded, err := cs.sc.Encode(cs.name, token)
+	encoded, err := cs.Sc.Encode(cs.Name, token)
 	if err != nil {
 		return err
 	}
 
 	cookie := &http.Cookie{
-		Name:     cs.name,
+		Name:     cs.Name,
 		Value:    encoded,
-		MaxAge:   cs.maxAge,
-		HttpOnly: cs.httpOnly,
-		Secure:   cs.secure,
-		SameSite: http.SameSite(cs.sameSite),
-		Path:     cs.path,
-		Domain:   cs.domain,
+		MaxAge:   cs.MaxAge,
+		HttpOnly: cs.HttpOnly,
+		Secure:   cs.Secure,
+		SameSite: http.SameSite(cs.SameSite),
+		Path:     cs.Path,
+		Domain:   cs.Domain,
 	}
 
 	// Set the Expires field on the cookie based on the MaxAge
 	// If MaxAge <= 0, we don't set the Expires attribute, making the cookie
 	// session-only.
-	if cs.maxAge > 0 {
+	if cs.MaxAge > 0 {
 		cookie.Expires = time.Now().Add(
-			time.Duration(cs.maxAge) * time.Second)
+			time.Duration(cs.MaxAge) * time.Second)
 	}
 
 	// Write the authenticated cookie to the response.

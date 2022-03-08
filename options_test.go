@@ -83,8 +83,8 @@ func TestMaxAge(t *testing.T) {
 		csrf := handler.(*csrf)
 		cs := csrf.st.(*CookieStore)
 
-		if cs.maxAge != defaultAge {
-			t.Fatalf("default maxAge not applied: got %d (want %d)", cs.maxAge, defaultAge)
+		if cs.MaxAge != defaultAge {
+			t.Fatalf("default maxAge not applied: got %d (want %d)", cs.MaxAge, defaultAge)
 		}
 	})
 
@@ -93,8 +93,8 @@ func TestMaxAge(t *testing.T) {
 		csrf := handler.(*csrf)
 		cs := csrf.st.(*CookieStore)
 
-		if cs.maxAge != 0 {
-			t.Fatalf("zero (0) maxAge not applied: got %d (want %d)", cs.maxAge, 0)
+		if cs.MaxAge != 0 {
+			t.Fatalf("zero (0) maxAge not applied: got %d (want %d)", cs.MaxAge, 0)
 		}
 	})
 
