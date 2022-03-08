@@ -85,7 +85,7 @@ func TestMethods(t *testing.T) {
 	p := Protect(testKey)(s)
 
 	// Test idempontent ("safe") methods
-	for _, method := range safeMethods {
+	for _, method := range SafeMethods {
 		r, err := http.NewRequest(method, "/", nil)
 		if err != nil {
 			t.Fatal(err)

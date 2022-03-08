@@ -30,7 +30,7 @@ var (
 	// The default HTTP request header to inspect
 	headerName = "X-CSRF-Token"
 	// Idempotent (safe) methods as defined by RFC7231 section 4.2.2.
-	safeMethods = []string{"GET", "HEAD", "OPTIONS", "TRACE"}
+	SafeMethods = []string{"GET", "HEAD", "OPTIONS", "TRACE"}
 )
 
 // TemplateTag provides a default template tag - e.g. {{ .csrfField }} - for use
@@ -241,7 +241,7 @@ func (cs *csrf) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// HTTP methods not defined as idempotent ("safe") under RFC7231 require
 	// inspection.
-	if !contains(safeMethods, r.Method) {
+	if !Contains(SafeMethods, r.Method) {
 		// Enforce an origin check for HTTPS connections. As per the Django CSRF
 		// implementation (https://goo.gl/vKA7GE) the Referer header is almost
 		// always present for same-domain HTTP requests.
